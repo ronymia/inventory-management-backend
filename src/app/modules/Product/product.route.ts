@@ -1,7 +1,7 @@
-import express from "express";
-import { ProductControllers } from "./product.controller";
-import validateRequest from "../../middlewares/validateRequest";
-import { ProductValidations } from "./product.validation";
+import express from 'express';
+import { ProductControllers } from './product.controller';
+import validateRequest from '../../middlewares/validateRequest';
+import { ProductValidations } from './product.validation';
 const router = express.Router();
 
 /***************
@@ -23,9 +23,9 @@ const router = express.Router();
  *
  *********************/
 router.post(
-  "/",
+  '/',
   validateRequest(ProductValidations.createProductZodSchema),
-  ProductControllers.createProduct
+  ProductControllers.createProduct,
 );
 
 /***************
@@ -46,7 +46,7 @@ router.post(
  *@apiError {forbidden 403} => only only can access this
  *
  *********************/
-router.get("/:id", ProductControllers.getProductById);
+router.get('/:id', ProductControllers.getProductById);
 
 /***************
  *
@@ -66,7 +66,7 @@ router.get("/:id", ProductControllers.getProductById);
  *@apiError {forbidden 403} => only only can access this
  *
  *********************/
-router.get("/", ProductControllers.getAllProducts);
+router.get('/', ProductControllers.getAllProducts);
 
 /***************
  *
@@ -86,10 +86,10 @@ router.get("/", ProductControllers.getAllProducts);
  *@apiError {forbidden 403} => only only can access this
  *
  *********************/
-router.Patch(
-  "/:id",
+router.patch(
+  '/:id',
   validateRequest(ProductValidations.updateProductZodSchema),
-  ProductControllers.updateProduct
+  ProductControllers.updateProduct,
 );
 
 /***************
@@ -110,6 +110,6 @@ router.Patch(
  *@apiError {forbidden 403} => only only can access this
  *
  *********************/
-router.delete("/:id", ProductControllers.deleteProduct);
+router.delete('/:id', ProductControllers.deleteProduct);
 
 export const ProductRoutes = router;
