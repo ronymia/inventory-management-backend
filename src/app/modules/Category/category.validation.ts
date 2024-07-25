@@ -1,15 +1,15 @@
-import { z } from "zod";
+import { z } from 'zod';
 
 const createCategoryZodSchema = z.object({
   body: z.object({
     name: z.string({
-      required_error: "Please provide Category name",
+      required_error: 'Please provide Category name',
     }),
     description: z.string({
-      required_error: "Please provide Category description",
+      required_error: 'Please provide Category description',
     }),
     image_URL: z.string({
-      required_error: "Please provide a image of category",
+      required_error: 'Please provide a image of category',
     }),
   }),
 });
@@ -18,17 +18,17 @@ const updateCategoryZodSchema = z.object({
   body: z.object({
     name: z
       .string({
-        required_error: "Please provide Category name",
+        required_error: 'Please provide Category name',
       })
-      .option(),
+      .optional(),
     description: z
       .string({
-        required_error: "Please provide Category description",
+        required_error: 'Please provide Category description',
       })
       .optional(),
     image_URL: z
       .string({
-        required_error: "Please provide a image of category",
+        required_error: 'Please provide a image of category',
       })
       .optional(),
   }),
