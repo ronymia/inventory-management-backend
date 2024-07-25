@@ -1,4 +1,6 @@
-import { SortOrder } from "mongoose";
+import { SortOrder } from 'mongoose';
+
+export type TSortOrder = 'asc' | 'desc';
 
 export type TPaginationOptions = {
   page?: number;

@@ -1,7 +1,7 @@
-import express from "express";
-import validateRequest from "../../middlewares/validateRequest";
-import { BrandControllers } from "./brand.controller";
-import { BrandZodValidation } from "./brand.validation";
+import express from 'express';
+import validateRequest from '../../middlewares/validateRequest';
+import { BrandControllers } from './brand.controller';
+import { BrandZodValidation } from './brand.validation';
 
 const router = express.Router();
 
@@ -23,9 +23,9 @@ const router = express.Router();
  *
  *********************/
 router.post(
-  "/",
+  '/',
   validateRequest(BrandZodValidation.createBrandZodSchema),
-  BrandControllers.createBrand
+  BrandControllers.createBrand,
 );
 
 /***************
@@ -45,7 +45,7 @@ router.post(
  *@apiError {forbidden 403} => only only can access this
  *
  *********************/
-router.get("/:id", BrandControllers.getBrandById);
+router.get('/:id', BrandControllers.getBrandById);
 
 /***************
  * @api {post} /products
@@ -64,7 +64,7 @@ router.get("/:id", BrandControllers.getBrandById);
  *@apiError {forbidden 403} => only only can access this
  *
  *********************/
-router.get("/", BrandControllers.getAllBrands);
+router.get('/', BrandControllers.getAllBrands);
 
 /***************
  * @api {post} /products
@@ -84,9 +84,9 @@ router.get("/", BrandControllers.getAllBrands);
  *
  *********************/
 router.patch(
-  "/:id",
-  validateRequest(BrandZodValidation.updateBrandZodSchema),
-  BrandControllers.updateBrand
+  '/:id',
+  // validateRequest(BrandZodValidation.updateBrandZodSchema),
+  BrandControllers.updateBrand,
 );
 
 /***************
@@ -106,6 +106,6 @@ router.patch(
  *@apiError {forbidden 403} => only only can access this
  *
  *********************/
-router.delete("/:id", BrandControllers.deleteBrand);
+router.delete('/:id', BrandControllers.deleteBrand);
 
 export const BrandRoutes = router;
