@@ -1,8 +1,10 @@
+import { SortOrder } from 'mongoose';
+
 type TOptions = {
   page?: number;
   limit?: number;
   sortBy?: string;
-  sortOrder?: string;
+  sortOrder?: SortOrder;
 };
 
 type TPaginationResult = {
@@ -10,7 +12,7 @@ type TPaginationResult = {
   limit: number;
   skip: number;
   sortBy: string;
-  sortOrder: string;
+  sortOrder: SortOrder;
 };
 
 const calculatePagination = (options: TOptions): TPaginationResult => {
@@ -18,8 +20,8 @@ const calculatePagination = (options: TOptions): TPaginationResult => {
   const limit = Number(options.limit) || 10;
   const skip = (page - 1) * limit;
 
-  const sortBy = options.sortBy || "createdAt";
-  const sortOrder = options.sortOrder || "desc";
+  const sortBy = options.sortBy || 'createdAt';
+  const sortOrder = options.sortOrder || 'desc';
 
   return {
     page,

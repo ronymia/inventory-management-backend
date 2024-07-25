@@ -36,7 +36,7 @@ export type TBrandFilters = {
   name?: string;
   email?: string;
   website?: string;
-  location?: string;
+  address?: string;
   //suppliers?: [Types.ObjectId] | ISupplier[];
   status?: TStatus;
 };
@@ -47,5 +47,5 @@ export type TBrandFilterableFields =
   | 'name'
   | 'email'
   | 'website'
-  | 'location'
+  | 'address'
   | 'status';

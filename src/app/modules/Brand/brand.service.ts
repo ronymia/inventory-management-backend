@@ -1,10 +1,10 @@
-import { SortOrder } from "mongoose";
-import { IBrand, TBrandFilters } from "./brand.interface";
-import { Brand } from "./brand.model";
-import { TPaginationOptions } from "../../interfaces/pagination";
-import { TGenericResponse } from "../../interfaces/response";
-import { paginationHelpers } from "../../helpers/paginationHelpers";
-import { brandSearchableFields } from "./brand.constant";
+import { SortOrder } from 'mongoose';
+import { IBrand, TBrandFilters } from './brand.interface';
+import { Brand } from './brand.model';
+import { TGenericResponse } from '../../interfaces/response';
+import { paginationHelpers } from '../../helpers/paginationHelpers';
+import { brandSearchableFields } from './brand.constant';
+import { TPaginationOptions } from '../../interfaces/pagination';
 
 const createBrandIntoDB = async (payload: IBrand): Promise<IBrand> => {
   const result = await Brand.create(payload);
@@ -19,7 +19,7 @@ const getBrandByIdFromDB = async (id: string): Promise<IBrand | null> => {
 
 const getAllBrandsFromDB = async (
   filters: TBrandFilters,
-  paginationOptions: TPaginationOptions
+  paginationOptions: TPaginationOptions,
 ): Promise<TGenericResponse<IBrand[]>> => {
   // Extract pagination option to implement pagination
   const { page, limit, skip, sortBy, sortOrder } =
@@ -43,7 +43,7 @@ const getAllBrandsFromDB = async (
       $or: brandSearchableFields.map((field) => ({
         [field]: {
           $regex: searchTerm,
-          $options: "i",
+          $options: 'i',
         },
       })),
     });
@@ -68,7 +68,7 @@ const getAllBrandsFromDB = async (
     .limit(limit);
 
   // Getting total
-  const total = await Brand.countDocument(whereCondition);
+  const total = await Brand.countDocuments(whereCondition);
   const totalPage = Math.ceil(total / limit);
 
   //
@@ -85,7 +85,7 @@ const getAllBrandsFromDB = async (
 
 const updateBrandIntoDB = async (
   id: string,
-  payload: Partial<IBrand>
+  payload: Partial<IBrand>,
 ): Promise<IBrand | null> => {
   const result = await Brand.findOneAndUpdate({ _id: id }, payload, {
     new: true,

@@ -1,19 +1,19 @@
-import { STATUS, TBrandFilterableFields, TStatus } from "./brand.interface";
+import { STATUS, TBrandFilterableFields, TStatus } from './brand.interface';
 
-export const status: TStatus[] = [STATUS.ACTIVE, STATUS.IN_ACTIVE];
+export const status: TStatus[] = [STATUS.ACTIVE, STATUS.IN_ACTIVE] as const;
 
 export const brandFilterableFields: TBrandFilterableFields[] = [
-  "searchTerm",
-  "name",
-  "email",
-  "website",
-  "location",
-  "status",
+  'searchTerm',
+  'name',
+  'email',
+  'website',
+  'address',
+  'status',
 ];
 export const brandSearchableFields: TBrandFilterableFields[] = [
-  "name",
-  "email",
-  "website",
-  "location",
-  "status",
+  'name',
+  'email',
+  'website',
+  'address',
+  'status',
 ];
