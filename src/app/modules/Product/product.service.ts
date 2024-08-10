@@ -1,16 +1,54 @@
-import { SortOrder } from "mongoose";
-import { paginationHelpers } from "../../helpers/paginationHelpers";
-import { TGenericResponse } from "../../interfaces/response";
-import { IProduct, TProductFilters } from "./product.interface";
-import { TPaginationOptions } from "../../interfaces/pagination";
-import { productSearchableFields } from "./product.constant";
+import mongoose, { SortOrder } from 'mongoose';
+import { paginationHelpers } from '../../helpers/paginationHelpers';
+import { TGenericResponse } from '../../interfaces/response';
+import { IProduct, TProductFilters } from './product.interface';
+import { TPaginationOptions } from '../../interfaces/pagination';
+import { productSearchableFields } from './product.constant';
+import { Product } from './product.model';
+import { Brand } from '../Brand/brand.model';
 
 const createProductIntoDB = async (payload: IProduct): Promise<IProduct> => {
-  const product = Product.create(payload);
-  return product;
+  const result = (await Product.create(payload)).populate(
+    path: 'brand',
+    populate: [{
+      path:'products'
+    }]
+  );
+  const updateProductOnBrand = await Brand.findByIdAndUpdate(payload.brand, {
+    $push: { products: result._id },
+  });
+
+  // const session = await mongoose.startSession();
+  // session.startTransaction();
+
+  // try {
+  //   // Create a new product within the transaction
+  //   const newProduct = await Product.create([payload], { session });
+  //   const product = newProduct[0]; // Since create with an array returns an array
+
+  //   // Update the brand with the new product ID within the transaction
+  //   await Brand.findByIdAndUpdate(
+  //     payload?.brand,
+  //     { $push: { products: product._id } },
+  //     { session },
+  //   );
+
+  //   // Commit the transaction
+  //   await session.commitTransaction();
+  //   session.endSession();
+
+  //   return product;
+  // } catch (error) {
+  //   // Abort the transaction in case of error
+  //   await session.abortTransaction();
+  //   session.endSession();
+  //   throw error;
+  // }
 };
+
+//
 const getProductByIdFromDB = async (
-  payload: string
+  payload: string,
 ): Promise<IProduct | null> => {
   const product = await Product.findById(payload);
   return product;
@@ -18,7 +56,7 @@ const getProductByIdFromDB = async (
 
 const getAllProductsFromDB = async (
   filters: TProductFilters,
-  paginationOptions: TPaginationOptions
+  paginationOptions: TPaginationOptions,
 ): Promise<TGenericResponse<IProduct[]>> => {
   // Extract pagination option to implement pagination
   const { page, limit, skip, sortBy, sortOrder } =
@@ -42,7 +80,7 @@ const getAllProductsFromDB = async (
       $or: productSearchableFields.map((field) => ({
         [field]: {
           $regex: searchTerm,
-          $options: "i",
+          $options: 'i',
         },
       })),
     });
@@ -67,7 +105,7 @@ const getAllProductsFromDB = async (
     .limit(limit);
 
   // Getting total
-  const total = await Product.countDocument(whereCondition);
+  const total = await Product.countDocuments(whereCondition);
   const totalPage = Math.ceil(total / limit);
 
   //
@@ -83,7 +121,7 @@ const getAllProductsFromDB = async (
 };
 const updateProductIntoDB = async (
   id: string,
-  payload: Partial<IProduct>
+  payload: Partial<IProduct>,
 ): Promise<IProduct> => {
   const result = await Product.findOneAndUpdate({ _id: id }, payload, {
     new: true,

@@ -12,12 +12,14 @@ const createProductZodSchema = z.object({
       required_error: 'Description is required',
     }),
     unit: z.enum([...unit] as [string, ...string[]]),
-    imageURLs: z
-      .string({
-        invalid_type_error: 'Image url must be string',
-        required_error: 'Image url is required',
-      })
-      .optional(),
+    imageURLs: z.array(
+      z
+        .string({
+          invalid_type_error: 'Image url must be string',
+          required_error: 'Image url is required',
+        })
+        .optional(),
+    ),
     category: z.string({
       invalid_type_error: 'Category ID must be string',
       required_error: 'Category ID is required',

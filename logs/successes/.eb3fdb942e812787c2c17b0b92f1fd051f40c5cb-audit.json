@@ -1,0 +1,20 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 1
+    },
+    "auditLog": "C:\\Users\\rony\\Desktop\\Resume\\inventory-management-backend\\logs\\successes\\.eb3fdb942e812787c2c17b0b92f1fd051f40c5cb-audit.json",
+    "files": [
+        {
+            "date": 1721929157487,
+            "name": "C:\\Users\\rony\\Desktop\\Resume\\inventory-management-backend\\logs\\successes\\2024-07-25-23success.log",
+            "hash": "0273bb2b1c86ee9853aaf1961c8e577e4cafc848d06328099e57222962f809bd"
+        },
+        {
+            "date": 1721930461502,
+            "name": "C:\\Users\\rony\\Desktop\\Resume\\inventory-management-backend\\logs\\successes\\2024-07-26-00success.log",
+            "hash": "6cec98ce5f3f1af76f1df4cc42f50dac43e8b2346d0628324a13d0b476af1025"
+        }
+    ],
+    "hashType": "sha256"
+}

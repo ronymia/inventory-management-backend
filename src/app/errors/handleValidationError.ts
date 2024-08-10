@@ -1,8 +1,9 @@
-import mongoose from "mongoose";
-import { TErrorSources, TGenericErrorResponse } from "../interfaces/errors";
+import mongoose from 'mongoose';
+import { TErrorSources, TGenericErrorResponse } from '../interfaces/errors';
+import httpStatus from 'http-status';
 
 const handleValidationError = (
-  err: mongoose.Error.ValidationError
+  err: mongoose.Error.ValidationError,
 ): TGenericErrorResponse => {
   const statusCode = httpStatus.UNPROCESSABLE_ENTITY;
 
@@ -12,12 +13,12 @@ const handleValidationError = (
         path: element?.path,
         message: element?.message,
       };
-    }
+    },
   );
 
   return {
     statusCode,
-    message: "Validation Error",
+    message: 'Validation Error',
     errorSources,
   };
 };
