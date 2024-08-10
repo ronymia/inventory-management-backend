@@ -15,11 +15,12 @@ const brandSchema = new Schema<IBrand, TBrandModel>(
     },
     description: {
       type: String,
-      required: [false, 'Please provide Description'],
+      required: [true, 'Please provide Description'],
     },
     email: {
       type: String,
       lowercase: true,
+      required: [true, 'Pleas provide email address'],
       validate: {
         validator: (value: string) => {
           if (value === '' || validator.isEmail(value)) {
@@ -32,6 +33,7 @@ const brandSchema = new Schema<IBrand, TBrandModel>(
     website: {
       type: String,
       lowercase: true,
+      required: [true, 'Please provide website address'],
       validate: {
         validator: (value: string) => {
           if (value === '' || validator.isURL(value)) {
@@ -43,7 +45,7 @@ const brandSchema = new Schema<IBrand, TBrandModel>(
     },
     address: {
       type: String,
-      required: [false, 'Please provide location'],
+      required: [true, 'Please provide address'],
     },
     products: {
       type: [
@@ -54,8 +56,14 @@ const brandSchema = new Schema<IBrand, TBrandModel>(
       ],
     },
     suppliers: {
-      name: String,
-      contactNumber: String,
+      name: {
+        type: String,
+        required: [true, 'Please provide Supplier name'],
+      },
+      contactNumber: {
+        type: String,
+        required: [true, 'Please provide Supplier contactNumber'],
+      },
       id: {
         type: {
           type: Schema.Types.ObjectId,

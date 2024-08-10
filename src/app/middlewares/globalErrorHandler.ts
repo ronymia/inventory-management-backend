@@ -1,25 +1,34 @@
-import config from "../config";
-import AppError from "../errors/AppError";
-import handleCastError from "../errors/handleCastError";
-import handleDuplicateError from "../errors/handleDuplicateError";
-import handleValidationError from "../errors/handleValidationError";
-import handleZodError from "../errors/handleZodError";
-import { TErrorSources } from "../interfaces/errors";
-import { errorLogger } from "../shared/logger";
+/* eslint-disable no-unused-expressions */
+/* eslint-disable no-console */
+import { ErrorRequestHandler, NextFunction } from 'express';
+import config from '../config';
+import { errorLogger } from '../shared/logger';
+import { TErrorSources } from '../interfaces/errors';
+import { ZodError } from 'zod';
+import handleZodError from '../errors/handleZodError';
+import handleValidationError from '../errors/handleValidationError';
+import handleCastError from '../errors/handleCastError';
+import handleDuplicateError from '../errors/handleDuplicateError';
+import AppError from '../errors/AppError';
 
-const globalErrorHandler: ErrorRequestHandler = (errors, req, res, next) => {
+const globalErrorHandler: ErrorRequestHandler = (
+  errors,
+  req,
+  res,
+  next: NextFunction,
+) => {
   //Debug
-  config.env === "development"
+  config.NODE_ENV === 'development'
     ? console.log(`🐱‍🏍 globalErrorHandler ~~`, errors)
     : errorLogger.error(`🐱‍🏍 globalErrorHandler ~~`, errors);
 
   //SETTING DEFAULT VALUES
   let statusCode = 500;
-  let message = "Something went wrong!";
+  let message = 'Something went wrong!';
   let errorSources: TErrorSources = [
     {
-      path: "",
-      message: "Something went wrong",
+      path: '',
+      message: 'Something went wrong',
     },
   ];
 
@@ -38,12 +47,12 @@ const globalErrorHandler: ErrorRequestHandler = (errors, req, res, next) => {
     statusCode = simplifiedError.statusCode;
     message = simplifiedError.message;
     errorSources = simplifiedError.errorSources;
-  } else if (errors?.name === "ValidationError") {
+  } else if (errors?.name === 'ValidationError') {
     const simplifiedError = handleValidationError(errors);
     statusCode = simplifiedError?.statusCode;
     message = simplifiedError?.message;
     errorSources = simplifiedError?.errorSources;
-  } else if (errors?.name === "CastError") {
+  } else if (errors?.name === 'CastError') {
     const simplifiedError = handleCastError(errors);
     statusCode = simplifiedError?.statusCode;
     message = simplifiedError?.message;
@@ -58,7 +67,7 @@ const globalErrorHandler: ErrorRequestHandler = (errors, req, res, next) => {
     message = errors.message;
     errorSources = [
       {
-        path: "",
+        path: '',
         message: errors?.message,
       },
     ];
@@ -66,7 +75,7 @@ const globalErrorHandler: ErrorRequestHandler = (errors, req, res, next) => {
     message = errors.message;
     errorSources = [
       {
-        path: "",
+        path: '',
         message: errors?.message,
       },
     ];
@@ -77,8 +86,7 @@ const globalErrorHandler: ErrorRequestHandler = (errors, req, res, next) => {
     success: false,
     message,
     errorSources,
-    errors,
-    stack: config.NODE_ENV === "development" ? errors?.stack : null,
+    stack: config.NODE_ENV === 'development' ? errors?.stack : null,
   });
 };
 

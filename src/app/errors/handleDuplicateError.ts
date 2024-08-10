@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { TErrorSources, TGenericErrorResponse } from "../interfaces/errors";
+import httpStatus from 'http-status';
+import { TErrorSources, TGenericErrorResponse } from '../interfaces/errors';
 
 const handleDuplicateError = (err: any): TGenericErrorResponse => {
   // Extract value within double quotes using regex
@@ -11,16 +12,16 @@ const handleDuplicateError = (err: any): TGenericErrorResponse => {
 
   const errorSources: TErrorSources = [
     {
-      path: "",
+      path: '',
       message: `${extractedMessage} is already exists`,
     },
   ];
 
-  const statusCode = 400;
+  const statusCode = httpStatus.CONFLICT;
 
   return {
     statusCode,
-    message: "Invalid ID",
+    message: 'Invalid ID',
     errorSources,
   };
 };

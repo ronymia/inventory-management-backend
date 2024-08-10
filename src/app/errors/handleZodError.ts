@@ -1,4 +1,6 @@
-import { TErrorSources, TGenericErrorResponse } from "../interfaces/errors";
+import { ZodError, ZodIssue } from 'zod';
+import { TErrorSources, TGenericErrorResponse } from '../interfaces/errors';
+import httpStatus from 'http-status';
 
 const handleZodError = (errors: ZodError): TGenericErrorResponse => {
   const statusCode = httpStatus.UNPROCESSABLE_ENTITY;
@@ -12,7 +14,7 @@ const handleZodError = (errors: ZodError): TGenericErrorResponse => {
 
   return {
     statusCode,
-    message: "Validation Error",
+    message: 'Validation Error',
     errorSources,
   };
 };

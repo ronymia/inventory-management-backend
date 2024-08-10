@@ -35,7 +35,7 @@ const productSchema = new Schema<IProduct, TProductModel>(
     brand: {
       type: Schema.Types.ObjectId,
       ref: 'Brand',
-      required: true,
+      required: [true, 'Please provide Brand ID'],
     },
   },
   {
